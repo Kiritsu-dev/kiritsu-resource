@@ -2,26 +2,28 @@ package kiritsu.resource.subscriptions;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import kiritsu.resource.subscriptions.enums.Category;
+import kiritsu.resource.subscriptions.enums.Priority;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subscriptions {
+public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String user_sub;
+    @Column(name = "user_sub")
+    private String userSub;
 
     @NotBlank
     @Size(min = 2, max = 50)
@@ -30,14 +32,10 @@ public class Subscriptions {
     @NotNull
     @Positive
     @DecimalMax("9999.99")
-    private float price;
+    private BigDecimal price;
 
-    private enum category {
-        gaming, streaming, learning, AI, phone, cloud
-    };
-    private enum priority {
-        worth, not_worth
-    };
+    private Category category;
+    private Priority priority;
 
     @CreatedDate
     @Column(updatable = false)
