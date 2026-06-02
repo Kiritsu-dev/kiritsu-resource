@@ -38,6 +38,7 @@ public class SubscriptionController {
         return ResponseEntity.ok(results);
     }
 
+    @PostMapping
     public ResponseEntity<SubscriptionResponse> postSubscription(
             @AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody SubscriptionRequest request
