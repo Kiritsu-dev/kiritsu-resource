@@ -6,6 +6,7 @@ import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
+import kiritsu.resource.subscriptions.specs.SubscriptionSpec;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,7 +29,9 @@ public class SubscriptionService {
     public List<SubscriptionResponse> findSubscriptions(String userSub, String name, BigDecimal minPrice, BigDecimal maxPrice
             , Category category, Priority priority) {
 
-        List<Subscription> subs = subscriptionRepository.findSubscriptions(userSub, name, minPrice, maxPrice, category, priority);
+        List<Subscription> subs = subscriptionRepository.findAll(
+                SubscriptionSpec.filter(userSub, name, minPrice, maxPrice, category, priority)
+        );
 
         List<SubscriptionResponse> responses = new ArrayList<SubscriptionResponse>();
 
