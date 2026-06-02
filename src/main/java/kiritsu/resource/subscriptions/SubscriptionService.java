@@ -47,8 +47,10 @@ public class SubscriptionService {
         Subscription subscription = new Subscription();
         subscription.setUserSub(userSub);
         subscription.setName(request.getName());
+        subscription.setPrice(request.getPrice());
         subscription.setCategory(request.getCategory());
         subscription.setPriority(request.getPriority());
+
 
         return SubscriptionResponse.from( subscriptionRepository.save(subscription));
 
