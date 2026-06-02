@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface SubscriptionRepository extends JpaRepository<Subscription, Long> {
-    List<Subscription> findSubscriptions(
+    List<Subscription> findSubscriptions(String userSub,
             String name, BigDecimal minPrice, BigDecimal maxPrice
             , Category category, Priority priority
     );

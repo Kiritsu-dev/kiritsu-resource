@@ -1,5 +1,6 @@
 package kiritsu.resource.subscriptions;
 
+import com.nimbusds.jwt.JWT;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +18,9 @@ public class SubscriptionService {
         this.subscriptionRepository = repo;
     }
 
-    public List<Subscription> findSubscriptions(String name, BigDecimal minPrice, BigDecimal maxPrice
+    public List<Subscription> findSubscriptions(String userSub, String name, BigDecimal minPrice, BigDecimal maxPrice
             , Category category, Priority priority) {
-        return subscriptionRepository.findSubscriptions(name, minPrice, maxPrice, category, priority);
+
+        return subscriptionRepository.findSubscriptions(userSub, name, minPrice, maxPrice, category, priority);
     }
 }
