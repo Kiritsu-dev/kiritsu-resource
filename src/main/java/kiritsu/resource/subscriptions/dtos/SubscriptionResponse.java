@@ -23,7 +23,7 @@ public class SubscriptionResponse {
         response.price = subscription.getPrice();
         response.category = subscription.getCategory();
         response.priority = subscription.getPriority();
-        response.created_at = subscription.getCreated_at();
+        response.created_at = subscription.getCreatedAt();
 
         return response;
     }
