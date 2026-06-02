@@ -1,12 +1,14 @@
 package kiritsu.resource.subscriptions;
 
 import com.nimbusds.jwt.JWT;
+import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,9 +20,16 @@ public class SubscriptionService {
         this.subscriptionRepository = repo;
     }
 
-    public List<Subscription> findSubscriptions(String userSub, String name, BigDecimal minPrice, BigDecimal maxPrice
+    public List<SubscriptionResponse> findSubscriptions(String userSub, String name, BigDecimal minPrice, BigDecimal maxPrice
             , Category category, Priority priority) {
 
-        return subscriptionRepository.findSubscriptions(userSub, name, minPrice, maxPrice, category, priority);
+        List<Subscription> subs = subscriptionRepository.findSubscriptions(userSub, name, minPrice, maxPrice, category, priority);
+
+        List<SubscriptionResponse> responses = new ArrayList<SubscriptionResponse>();
+
+        for (Subscription sub: subs) {
+            responses.add(SubscriptionResponse.from(sub));
+        }
+        return responses;
     }
 }
