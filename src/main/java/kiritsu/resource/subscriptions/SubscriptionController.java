@@ -1,7 +1,11 @@
 package kiritsu.resource.subscriptions;
+import com.nimbusds.jwt.JWT;
+import jakarta.validation.Valid;
+import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -34,6 +38,15 @@ public class SubscriptionController {
         return ResponseEntity.ok(results);
     }
 
+    public ResponseEntity<SubscriptionResponse> postSubscription(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody SubscriptionRequest request
+    ) {
+        // check for duplication
+        SubscriptionResponse response = subscriptionService.addSubscription(request, jwt.getSubject());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
 
 }

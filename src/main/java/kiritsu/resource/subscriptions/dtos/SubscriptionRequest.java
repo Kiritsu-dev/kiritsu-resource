@@ -24,14 +24,6 @@ public class SubscriptionRequest {
     private Category category;
     private Priority priority;
 
-    public Subscription toSubscription(SubscriptionRequest request) {
-        Subscription subscription = new Subscription();
-        subscription.setName(this.name);
-        subscription.setPrice(this.price);
-        subscription.setCategory(this.category);
-        subscription.setPriority(this.priority);
 
-        return subscription;
-    }
 
 }
