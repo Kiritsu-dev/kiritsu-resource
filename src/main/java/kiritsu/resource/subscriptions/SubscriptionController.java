@@ -1,6 +1,6 @@
 package kiritsu.resource.subscriptions;
-import com.nimbusds.jwt.JWT;
 import jakarta.validation.Valid;
+import kiritsu.resource.subscriptions.dtos.PriorityDto;
 import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
@@ -47,6 +47,16 @@ public class SubscriptionController {
         SubscriptionResponse response = subscriptionService.addSubscription(request, jwt.getSubject());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PatchMapping("/priority")
+    public ResponseEntity<PriorityDto> patchPriority(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody PriorityDto dto
+            ) {
+        subscriptionService.patchPriority(dto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
 

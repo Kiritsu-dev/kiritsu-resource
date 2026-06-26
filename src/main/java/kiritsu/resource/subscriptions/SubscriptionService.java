@@ -1,17 +1,12 @@
 package kiritsu.resource.subscriptions;
 
-import com.nimbusds.jwt.JWT;
-import jakarta.validation.Valid;
+import kiritsu.resource.subscriptions.dtos.PriorityDto;
 import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
 import kiritsu.resource.subscriptions.specs.SubscriptionSpec;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,6 +48,14 @@ public class SubscriptionService {
 
 
         return SubscriptionResponse.from( subscriptionRepository.save(subscription));
+
+    }
+
+    public PriorityDto patchPriority (PriorityDto dto) {
+        Subscription subscription = subscriptionRepository.findById(dto.getId()).orElse(null);
+        subscription.setPriority(dto.getPriority());
+        subscriptionRepository.save(subscription);
+        return dto;
 
     }
 }
