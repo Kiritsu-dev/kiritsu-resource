@@ -1,5 +1,7 @@
 package kiritsu.resource.subscriptions;
 
+import jakarta.validation.Valid;
+import kiritsu.resource.subscriptions.dtos.DeleteDto;
 import kiritsu.resource.subscriptions.dtos.PriorityDto;
 import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
@@ -57,5 +59,10 @@ public class SubscriptionService {
         subscriptionRepository.save(subscription);
         return dto;
 
+    }
+
+    public void deleteSubscription(DeleteDto dto) {
+        Subscription subscription = subscriptionRepository.findById(dto.getId()).orElse(null);
+        subscriptionRepository.delete(subscription);
     }
 }

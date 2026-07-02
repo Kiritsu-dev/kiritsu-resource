@@ -1,5 +1,7 @@
 package kiritsu.resource.subscriptions;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
+import kiritsu.resource.subscriptions.dtos.DeleteDto;
 import kiritsu.resource.subscriptions.dtos.PriorityDto;
 import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
 import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
@@ -57,6 +59,15 @@ public class SubscriptionController {
         subscriptionService.patchPriority(dto);
 
         return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
+
+    @DeleteMapping()
+    public ResponseEntity<Void> deleteSubscription(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody DeleteDto dto
+    ) {
+        subscriptionService.deleteSubscription(dto);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
