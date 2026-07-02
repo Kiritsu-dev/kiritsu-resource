@@ -33,10 +33,10 @@ public class Subscription {
 
     private BigDecimal price;
 
-    @Enumerated(EnumType.STRING)
+
     private Category category;
 
-    @Enumerated(EnumType.STRING)
+
     private Priority priority;
 
     @CreatedDate
