@@ -1,6 +1,5 @@
 package kiritsu.resource.subscriptions;
 
-import jakarta.validation.Valid;
 import kiritsu.resource.subscriptions.dtos.DeleteDto;
 import kiritsu.resource.subscriptions.dtos.PriorityDto;
 import kiritsu.resource.subscriptions.dtos.SubscriptionRequest;
@@ -8,7 +7,9 @@ import kiritsu.resource.subscriptions.dtos.SubscriptionResponse;
 import kiritsu.resource.subscriptions.enums.Category;
 import kiritsu.resource.subscriptions.enums.Priority;
 import kiritsu.resource.subscriptions.specs.SubscriptionSpec;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,16 +54,17 @@ public class SubscriptionService {
 
     }
 
-    public PriorityDto patchPriority (PriorityDto dto) {
-        Subscription subscription = subscriptionRepository.findById(dto.getId()).orElse(null);
+    public PriorityDto patchPriority(PriorityDto dto, String userSub) {
+        Subscription subscription = subscriptionRepository.findByUserSubAndId(userSub, dto.getId());
+        if (subscription == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         subscription.setPriority(dto.getPriority());
         subscriptionRepository.save(subscription);
         return dto;
-
     }
 
-    public void deleteSubscription(DeleteDto dto) {
-        Subscription subscription = subscriptionRepository.findById(dto.getId()).orElse(null);
+    public void deleteSubscription(DeleteDto dto, String userSub) {
+        Subscription subscription = subscriptionRepository.findByUserSubAndId(userSub, dto.getId());
+        if (subscription == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         subscriptionRepository.delete(subscription);
     }
 }

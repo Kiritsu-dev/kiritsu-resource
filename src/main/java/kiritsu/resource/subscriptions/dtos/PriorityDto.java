@@ -8,6 +8,5 @@ import lombok.Data;
 public class PriorityDto {
     @NotNull
     private Long id;
-    @NotNull
-    private Priority priority;
+    private Priority priority; // nullable — null means re-judge (move back to pending)
 }
